@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class="mb-4">Mes Tâches</h1>
+    
+    <a href="{% url 'ajouter_tache' %}" class="btn btn-primary mb-3">Ajouter une tâche</a>
+    
+    <div class="list-group">
+        {% for tach in tache %}
+            <div class="list-group-item">
+                <div class="d-flex justify-content-between">
+                    <h5>{{ tach.title }}</h5>
+                    <div>
+                        <span class="badge bg-{% if tache.status == 'done' %}success{% elif tache.status == 'in_progress' %}warning{% else %}info{% endif %}">
+                            {{ tach.get_status_display }}
+                        </span>
+                    </div>
+                </div>
+                <p class="mb-1">{{ tach.description }}</p>
+                <small>Échéance: {{ tach.date|date:"d/m/Y H:i" }}</small>
+                <div class="mt-2">
+                    <a href="{% url 'modifier_tache' tach.pk %}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                    <a href="{% url 'supprimer_tache' tach.pk %}" class="btn btn-sm btn-outline-danger">Supprimer</a>
+                </div>
+            </div>
+        {% empty %}
+            <div class="alert alert-info">Aucune tâche pour le moment.</div>
+        {% endfor %}
+    </div>
+{% endblock %}

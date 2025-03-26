@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1 class="mb-4">Inscription</h1>
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
+    </form>
+    
+    <p class="mt-3">Déjà un compte? <a href="{% url 'connexion' %}">Se connecter</a></p>
+{% endblock %}
